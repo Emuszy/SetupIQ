@@ -12,11 +12,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install & Build
-        working-directory: SetupIQ/SetupIQ/atlas-engine
-        run: npm install && npm run build
+      - name: Find and Build
+        run: |
+          DIR=$(find . -name "package.json" -not -path "*/node_modules/*" | head -1 | xargs dirname)
+          echo "Found project at: $DIR"
+          cd $DIR
+          npm install && npm run build
+          echo "DIST_DIR=$DIR/dist" >> $GITHUB_ENV
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: SetupIQ/SetupIQ/atlas-engine/dist
+          publish_dir: ${{ env.DIST_DIR }}
