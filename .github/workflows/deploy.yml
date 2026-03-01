@@ -13,10 +13,10 @@ jobs:
         with:
           node-version: 18
       - name: Install & Build
-        working-directory: SetupIQ/atlas-engine
+        working-directory: SetupIQ/SetupIQ/atlas-engine
         run: npm install && npm run build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: SetupIQ/atlas-engine/dist
+          publish_dir: SetupIQ/SetupIQ/atlas-engine/dist
